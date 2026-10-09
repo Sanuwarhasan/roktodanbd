@@ -1,7 +1,7 @@
 /* রক্তদান BD — জেলা পেজ: Firebase থেকে এই জেলার লাইভ ডোনার ও অনুরোধ */
 (function(){
 var D = window.DISTRICT;
-var cfg = {apiKey:"AIzaSyDa6ZVCdvbQ0K3p4q77diiePx9lFsQOUmQ",authDomain:"roktodanbd.firebaseapp.com",projectId:"roktodanbd",storageBucket:"roktodanbd.firebasestorage.app",messagingSenderId:"982753175969",appId:"1:982753175969:web:606afaba989f07ba8f83e0"};
+var cfg = null; /* /firebase-config.js থেকে আসে (GitHub-এ নেই) */
 var GROUPS = ["A+","A-","B+","B-","O+","O-","AB+","AB-"];
 var donors = [], reqs = [], group = "", upa = "";
 function bn(n){return String(n).replace(/[0-9]/g,function(c){return "০১২৩৪৫৬৭৮৯"[c];});}
@@ -49,6 +49,9 @@ function renderReqs(){
 window.setGroup=function(g,el){group=g;var c=document.querySelectorAll(".chip[data-g]");for(var i=0;i<c.length;i++)c[i].classList.toggle("active",c[i]===el);render();};
 window.setUpa=function(u){upa=u;$("upaSel").value=u;render();document.getElementById("donors").scrollIntoView({behavior:"smooth"});};
 
+function start(){
+cfg = window.FIREBASE_CONFIG;
+if(!cfg || !cfg.apiKey) return;
 try{
   firebase.initializeApp(cfg);
   var db=firebase.firestore();
@@ -61,4 +64,7 @@ try{
     reqs.sort(function(a,b){return (b.time||0)-(a.time||0);});stats();renderReqs();
   },function(){renderReqs();});
 }catch(e){}
+}
+if(window.FIREBASE_CONFIG) start();
+else { var sc=document.createElement("script"); sc.src="/firebase-config.js"; sc.onload=start; document.head.appendChild(sc); }
 })();
