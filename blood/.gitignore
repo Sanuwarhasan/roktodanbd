@@ -1,0 +1,18 @@
+# 🔒 গোপন / নিরাপত্তা ফাইল — GitHub-এ যাবে না
+firebase-config.js
+firestore.rules
+*.rules
+.htaccess
+htaccess.txt
+.env
+.env.*
+*.key
+*.pem
+serviceAccount*.json
+*-firebase-adminsdk-*.json
+.firebaserc
+firebase-debug.log
+firestore-debug.log
+node_modules/
+.DS_Store
+Thumbs.db
